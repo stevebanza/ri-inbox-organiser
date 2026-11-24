@@ -1,0 +1,51 @@
+# Where files go and which mail counts.
+output_root: output/ESA
+days_back: 30
+target_recipients:            # only mail sent (To/Cc) to these addresses; empty = all mail
+  - ri.data@example.org       # real addresses: put them in .env as TARGET_RECIPIENTS=a@x,b@y
+extract_zips: true            # unzip archives next to the saved .zip
+min_image_kb: 100             # images smaller than this are signatures/logos, not data
+body_chars: 3000              # how much of the (unquoted) body to read
+
+# How much each piece of evidence counts. A file-name match for one country decides alone.
+weights: {filename: 5, subject: 3, sender: 2, body: 1}
+min_score: 2                  # below this (e.g. a single mention in the body) -> review
+tie_ratio: 0.75               # runner-up >= 75% of the best score -> review
+
+# Country codes inside file names: AUGA2612 = A + UGA + yy + week, MLABMAL2611,
+# AFPLES, EriAFP, MREGUGA26... Prefixes/suffixes around a code:
+filename_code_prefixes: [A, M, AFP, MLAB, MLAM, MREG]
+filename_code_suffixes: [AFP, MEASLES, MEALSES]
+
+# Data type subfolder: first pattern that matches the file name (then the subject) wins.
+data_types:
+  - {name: Lab, pattern: 'MLAB|MLAM|(?<![A-Za-z])lab(?![A-Za-z])|laboratory'}
+  - {name: AFP, pattern: 'AFP|polio|^A[A-Z]{3}\d{4}'}
+  - {name: Measles, pattern: 'measles|mealses|rubella|rougeole|MREG|^M[A-Z]{3}\d{4}'}
+  - {name: KPIs, pattern: 'KPI|indicator'}
+  - {name: RI, pattern: 'EPI|(?<![A-Za-z])RI(?![A-Za-z])|RID|immuni[sz]ation|utility|PEV|vaccin'}
+
+# Countries: folder name, other names, codes used in file names, sender e-mail domains.
+# The domains below are placeholders for the demo; use the real ministry domains.
+countries:
+  Botswana:     {codes: [BOT, BWA], domains: [bw.example]}
+  Burundi:      {codes: [BDI], domains: [bi.example]}
+  Comoros:      {aliases: [Comores, Comore], codes: [COM, COI], domains: [km.example]}
+  Eritrea:      {aliases: [Erythrée], codes: [ERI], domains: [er.example]}
+  Eswatini:     {aliases: [Swaziland], codes: [SWZ, ESW], domains: [sz.example]}
+  Ethiopia:     {aliases: [Ethiopie], codes: [ETH], domains: [et.example]}
+  Kenya:        {codes: [KEN], domains: [ke.example]}
+  Lesotho:      {codes: [LES, LSO], domains: [ls.example]}
+  Madagascar:   {codes: [MAD, MDG], domains: [mg.example]}
+  Malawi:       {codes: [MAL, MLW, MWI], domains: [mw.example]}
+  Mozambique:   {aliases: [Moçambique], codes: [MOZ], domains: [mz.example]}
+  Namibia:      {codes: [NAM], domains: [na.example]}
+  Rwanda:       {codes: [RWA], domains: [rw.example]}
+  Somalia:      {codes: [SOM], domains: [so.example]}
+  South Africa: {aliases: [RSA], codes: [ZAF, RSA], domains: [za.example]}
+  South Sudan:  {aliases: [Sudan du Sud], codes: [RSS, SSD], domains: [ss.example]}
+  Tanzania:     {aliases: [United Republic of Tanzania, Tanzania Mainland, Zanzibar],
+                 codes: [TAN, TZA], domains: [tz.example]}
+  Uganda:       {codes: [UGA], domains: [ug.example]}
+  Zambia:       {codes: [ZAM, ZMB], domains: [zm.example]}
+  Zimbabwe:     {codes: [ZIM, ZWE], domains: [zw.example]}

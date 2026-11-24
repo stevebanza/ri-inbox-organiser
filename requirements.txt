@@ -1,0 +1,2 @@
+PyYAML>=6.0
+pywin32>=306; sys_platform == "win32"   # only for --source outlook
