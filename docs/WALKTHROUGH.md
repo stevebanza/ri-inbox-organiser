@@ -54,7 +54,7 @@ Every saved file's bytes are hashed with SHA-256, and the hash is stored in `_ma
 
 ```powershell
 .venv\Scripts\Activate.ps1
-$env:TARGET_RECIPIENTS = "ri.data@your-real-domain,epi.data@your-real-domain"   # never committed
+$env:TARGET_RECIPIENTS = "ri.data@example.org,epi.data@example.org"   # use the real addresses; never committed
 $env:ESA_ROOT = "C:\Data\ESA"
 python organise.py --source outlook --dry-run --days 7      # decides and reports, saves nothing
 # read the report: are the countries right? what went to review?
